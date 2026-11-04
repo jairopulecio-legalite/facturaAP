@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+node_modules/
+data/
+*.xlsx
+*.xlsm
+*.xls
+*.zip
+.DS_Store
