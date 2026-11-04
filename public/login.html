@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Acceso · Facturación AP Legalite</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#3b2d2a;background:#f6efe3}*{box-sizing:border-box}
+body{min-height:100vh;display:grid;place-items:center;margin:0;padding:20px}
+main{width:min(430px,100%);padding:36px;border-radius:12px;background:#fffcf7;border:1px solid #e2d4bc;box-shadow:0 18px 55px #392c2d12}
+small{letter-spacing:.12em;text-transform:uppercase;color:#a07631;font-weight:700}h1{font-family:Georgia,serif;font-size:33px;margin:13px 0 6px}p{color:#796b63;margin:0 0 25px}
+label{display:block;font-weight:600;margin:14px 0 6px}input{width:100%;padding:12px 14px;border:1px solid #c9b7a3;border-radius:6px;font-size:16px;background:white}
+button{width:100%;margin-top:24px;padding:13px;background:#9e2a2d;color:white;border:0;border-radius:6px;font-size:15px;font-weight:700;cursor:pointer}
+#err{min-height:1.2em;margin-top:13px;color:#9e2a2d}
+</style>
+</head>
+<body><main><small>Grupo Legalite · Acceso interno</small><h1>Facturación AP</h1><p>Ingresa con tu usuario de trabajo para acceder a la facturación compartida.</p>
+<form id="login"><label for="name">Usuario</label><input id="name" name="name" autocomplete="username" required autofocus>
+<label for="pass">Contraseña</label><input id="pass" name="pass" type="password" autocomplete="current-password" required>
+<button id="btn">Entrar al sistema</button><div id="err" role="alert"></div></form></main>
+<script>
+document.getElementById('login').addEventListener('submit',async e=>{
+ e.preventDefault();const btn=document.getElementById('btn');btn.disabled=true;document.getElementById('err').textContent='';
+ try{const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:document.getElementById('name').value,password:document.getElementById('pass').value})});
+ const d=await r.json();if(!r.ok)throw Error(d.error||'No fue posible ingresar');location.replace('/');}
+ catch(e){document.getElementById('err').textContent=e.message;btn.disabled=false;}
+});
+</script></body></html>
